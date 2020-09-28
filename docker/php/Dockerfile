@@ -32,5 +32,5 @@ COPY ./src/ /var/www
 
 USER www-data
 
-EXPOSE 9000
+# EXPOSE 9000
 CMD ["php-fpm"]

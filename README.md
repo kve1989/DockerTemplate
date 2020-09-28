@@ -4,3 +4,5 @@
 - Просмотр логов `docker-compose logs --tail 25`
 
 ## Laravel's command helpers
+- Установить Laravel `composer create-project --prefer-dist laravel/laravel <NameProj>`
+- Установить Laravel другой версии `composer create-project --prefer-dist laravel/laravel:^7.0 <NameProj>`

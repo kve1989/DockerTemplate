@@ -32,26 +32,29 @@ services:
     db:
         image: mysql:5.7.24
         container_name: mysql
-        command: "--default-authentication-plugin=mysql_native_password"
+        command: --default-authentication-plugin=mysql_native_password
         restart: unless-stopped
         tty: true
         ports:
             - "7776:3306"
         environment:
-            MYSQL_DATABASE: webinar_laravel
-            MYSQL_USER: webinar_laravel
-            MYSQL_PASSWORD: webinar_laravel
-            MYSQL_ROOT_PASSWORD: webinar_laravel
-            SERVICE_TAGS: dev
-            SERVICE_NAME: mysql
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: app_db
+            MYSQL_USER: docker
+            MYSQL_PASSWORD: docker
+            MYSQL_HOST: localhost
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
-            - ./docker/mysql/conf/my.cnf:/etc/mysql/my.cnf
+            - ./docker/mysql/conf/my.cnf:/etc/mysql/conf.d/mysql.cnf
+    # phpMyAdmin
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: pma
+        links:
+            - db
+        restart: unless-stopped
         environment:
+            MYSQL_ROOT_PASSWORD: root
             PMA_HOST: db
-            PMA_PORT: 3306
         ports:
             - "7778:80"
