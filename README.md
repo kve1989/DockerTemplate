@@ -1,3 +1,6 @@
+## Чтобы начать
+`git clone https://github.com/kve1989/DockerTemplate.git .; rm -rf .git`
+
 ## Docker's command helpers
 - Запуск контейнеров `docker-compose up -d --build`
 - Остановка контейнеров `docker-compose down`
