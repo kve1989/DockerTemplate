@@ -1,4 +1,4 @@
-	FROM php:7.3-fpm
+FROM php:7.3-fpm
 USER root
 
 WORKDIR /var/www
@@ -26,9 +26,9 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-webp-dir=/usr/include --with-jpeg-dir=/usr/include
 
-# RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY ./docker/php/composer.phar /usr/local/bin/composer
+# COPY ./docker/php/composer.phar /usr/local/bin/composer
 COPY ./src/ /var/www
 
 USER www-data
