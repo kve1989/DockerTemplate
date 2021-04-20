@@ -1,12 +1,12 @@
 version: "3"
 services:
     # PHP service
-    app:
+    php:
         build:
             context: .
             dockerfile: ./docker/php/Dockerfile
         image: php:7.3-fpm
-        container_name: app
+        container_name: php
         restart: unless-stopped
         tty: true
         environment:
@@ -21,9 +21,9 @@ services:
         links:
             - db
     # NGINX
-    webserver:
+    nginx:
         image: nginx:alpine
-        container_name: webserver
+        container_name: nginx
         restart: unless-stopped
         tty: true
         ports:
@@ -48,26 +48,12 @@ services:
             MYSQL_DATABASE: okbhmao
             MYSQL_USER: root
             MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
             - ./docker/mysql/conf/my.cnf:/etc/mysql/conf.d/mysql.cnf:ro
         networks:
             - app-network
-    # phpMyAdmin
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        container_name: pma
-        restart: unless-stopped
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            PMA_HOST: db
-        ports:
-            - "7778:80"
-        links:
-            - db
-        networks:
-            - app-network
-
 networks:
     app-network:
         driver: bridge
