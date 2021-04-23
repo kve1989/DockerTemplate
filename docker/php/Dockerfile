@@ -24,9 +24,7 @@ RUN apt-get update && apt install -y \
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mysqli mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg
-RUN docker-php-ext-install gd
+RUN docker-php-ext-install pdo_mysql mysqli mbstring zip exif pcntl gd
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
