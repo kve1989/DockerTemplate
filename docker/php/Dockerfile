@@ -9,6 +9,7 @@ RUN apt-get update && apt install -y \
 	libpng-dev \
 	libjpeg62-turbo-dev \
 	libwebp-dev \
+	libonig-dev \
 	libxpm-dev \
 	libfreetype6 \
 	libfreetype6-dev \
@@ -24,14 +25,19 @@ RUN apt-get update && apt install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install pdo_mysql mysqli mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-webp-dir=/usr/include --with-jpeg-dir=/usr/include
+RUN docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg
+RUN docker-php-ext-install gd
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # COPY ./docker/php/composer.phar /usr/local/bin/composer
 COPY ./src/ /var/www
+COPY --chown=www:www ./src/ /var/www
 
-USER www-data
+USER www
 
 EXPOSE 9000
 CMD ["php-fpm"]

@@ -5,7 +5,7 @@ services:
         build:
             context: .
             dockerfile: ./docker/php/Dockerfile
-        image: php:7.3-fpm
+        image: php:7.4-fpm
         container_name: php
         restart: unless-stopped
         tty: true
@@ -34,21 +34,20 @@ services:
         networks:
             - app-network
         depends_on:
-            - app
+            - php
     # MySQL
     db:
-        image: mysql:5.7.24
+        image: mysql:5.7
         container_name: db
         restart: unless-stopped
         tty: true
         ports:
-            - "6033:3306"
+            - "3306:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: okbhmao
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: Aa12345
+            MYSQL_DATABASE: db
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
             - ./docker/mysql/conf/my.cnf:/etc/mysql/conf.d/mysql.cnf:ro
