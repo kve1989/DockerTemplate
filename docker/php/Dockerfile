@@ -33,7 +33,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
-# COPY ./docker/php/composer.phar /usr/local/bin/composer
 COPY ./src/ /var/www
 COPY --chown=www:www ./src/ /var/www
 
