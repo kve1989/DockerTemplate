@@ -1,12 +1,12 @@
 version: "3"
 services:
     # PHP service
-    php:
+    app:
         build:
             context: .
             dockerfile: ./docker/php/Dockerfile
         image: php:7.4-fpm
-        container_name: php
+        container_name: app
         restart: unless-stopped
         tty: true
         environment:
@@ -34,7 +34,7 @@ services:
         networks:
             - app-network
         depends_on:
-            - php
+            - app
     # MySQL
     db:
         image: mysql:5.7
