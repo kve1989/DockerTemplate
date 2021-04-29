@@ -53,6 +53,17 @@ services:
             - ./docker/mysql/conf/my.cnf:/etc/mysql/conf.d/mysql.cnf:ro
         networks:
             - app-network
+    # phpMyAdmin
+    pma:
+        image: phpmyadmin
+        container_name: pma
+        restart: unless-stopped
+        ports:
+            - "7778:80"
+        networks:
+            - app-network
+        links:
+            - db
 networks:
     app-network:
         driver: bridge
